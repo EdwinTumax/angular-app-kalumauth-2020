@@ -6,32 +6,30 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" [routerLink] = "['home']" >Home</a>
           </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authenticated">
           <a class="nav-link" [routerLink] = "['usuarios']" >Usuarios</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authenticated">
           <a class="nav-link" [routerLink] = "['roles']" >Roles</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Catálogos
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Usuario</a>
-            <a class="dropdown-item" href="#">Roles</a>            
-            <a class="dropdown-item" href="#">Asignar usuario a rol</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      <ul class="navbar-nav navbar-right">
+        <li *ngIf="!authenticated">
+          <a [routerLink]="['/login']" class="btn btn-outline-primary">
+            Sign In
+          </a>
+        </li>
+          <li class="dropdown" *ngIf="authenticated">
+            <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+              {{email}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <button (click)="logout()" class="dropdown-item" type="submit">Sign Out</button>
+            </div>
+          </li>
+      </ul>
     </div>
   </nav>

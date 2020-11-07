@@ -1,0 +1,46 @@
+<ul class="alert alert-danger mt-5" *ngIf="error.length > 0">
+    <li>
+        {{error}}
+    </li>
+</ul>
+<div class="card bg-dark text-white mt-5">
+    <div class="card-header">Nuevo</div>
+    <div class="card-body">
+        <form>
+            <div class="form-group row">
+                <label for="username" class="col-form-label col-sm-2" >UserName</label>
+                <div class="col-sm-6">
+                    <input type="text" [(ngModel)] = "usuario.userName"  class="form-control" name="username" placeholder="username"/>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="normalizedUserName" class="col-form-label col-sm-2">NormalizedUserName</label>
+                <div class="col-sm-6">
+                    <input type="text" [(ngModel)] = "usuario.normalizedUserName"  class="form-control" name="normalizedUserName" placeholder="NormalizedUserName"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="email" class="col-form-label col-sm-2" >Email</label>
+                <div class="col-sm-6">
+                    <input type="text" [(ngModel)] = "usuario.email"  class="form-control" name="email" placeholder="email"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password" class="col-form-label col-sm-2" >Password</label>
+                <div class="col-sm-6">
+                    <input type="password" [(ngModel)] = "usuario.password"  class="form-control" name="password" placeholder="password"/>
+                </div>
+            </div>            
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <button class="btn btn-primary" role="button" (click) = "crear()">Create</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
