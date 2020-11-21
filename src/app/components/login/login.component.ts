@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {
     this.usuario = new Usuario();    
-    this.usuario.email = 'edwintumax@gmail.com';
+    this.usuario.email = 'etumax@gmail.com';
     this.usuario.password = 'Guatemala.2020';
    }
 

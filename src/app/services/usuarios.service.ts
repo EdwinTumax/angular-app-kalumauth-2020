@@ -1,32 +1,55 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usuario } from '../components/usuarios/usuario';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
 
-  token = '';
-  
-  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json',
-    'Access-Control-Allow-Headers':'Content-Type'});
+  endPoint = 'https://localhost:5007/KalumAutenticacion/v1';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: Router) {
   }
 
-  getUsuarios() {
-    return this.httpClient.get('https://localhost:5007/KalumAutenticacion/v1/Usuarios', {headers: this.httpHeaders})
+  getUsuarios(): Observable<Usuario[]> {
+    return this.httpClient.get<Usuario[]>( `${this.endPoint}/Usuarios`)
   }
   
   create(usuario: Usuario) : Observable<Usuario>{
-    return this.httpClient.post<Usuario>('https://localhost:5007/KalumAutenticacion/v1/Cuentas/Crear', usuario ,{headers: this.httpHeaders})
+    return this.httpClient.post<Usuario>(`${this.endPoint}/Cuentas/Crear`, usuario )
   }
   
   delete( id: string) : Observable<Usuario>{
-    return this.httpClient.delete<Usuario>(`https://localhost:5007/KalumAutenticacion/v1/usuarios/${id}`,{headers: this.httpHeaders});
+    return this.httpClient.delete<Usuario>(`${this.endPoint}/usuarios/${id}`)
+      .pipe(catchError( e => {
+        if(e){
+          console.log(e);
+        }
+        return throwError(e);
+      }));    
   }
 
+  getUSuario(id) : Observable<Usuario>{
+    return this.httpClient.get<Usuario>(`${this.endPoint}/usuarios/${id}`).pipe(
+      catchError( e => {
+        if(e.status != 401){
+          this.router.navigate(['/usuarios']);
+        }
+        return throwError(e);
+      })
+    );
+  }
+
+  update(usuario: Usuario) : Observable<any> {
+    return this.httpClient.put<any>(`${this.endPoint}/usuarios/${usuario.id}`,usuario).pipe(
+      catchError( e => {
+        return throwError(e);
+      })
+    );
+  }
 
 }

@@ -26,7 +26,7 @@
                         <td>{{ item.normalizedUserName }}</td>                
                         <td>{{ item.email }}</td>    
                         <td>
-                            <button type="button" name="editar" class="btn btn-primary btn-sm">Editar</button>
+                            <button type="button" name="editar" [routerLink] = "['/usuarios/form', item.id]" class="btn btn-primary btn-sm">Editar</button>
                         </td>
                         <td>
                             <button type="button" name="eliminar" (click) = "eliminar(item)" class="btn btn-danger btn-sm">Eliminar</button>

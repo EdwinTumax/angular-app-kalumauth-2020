@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from './usuario';
 import { UsuariosService } from '../../services/usuarios.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 
 @Component({
@@ -16,9 +16,25 @@ export class FormularioUsuarioComponent implements OnInit {
 
   error: string;
 
-  constructor(private usuariosService : UsuariosService, private router: Router) { }
+  titulo: string;
+
+  constructor(private usuariosService : UsuariosService, 
+    private router: Router, 
+    private activatedRouter: ActivatedRoute ) { }
 
   ngOnInit(): void {
+    this.activatedRouter.paramMap.subscribe( params => {
+      const id = params.get('id');
+      if(id){
+        this.titulo = 'EDITAR'
+        this.usuariosService.getUSuario(id)
+          .subscribe((usuario) => {
+            console.log(usuario);
+            this.usuario = usuario });
+      }else{
+        this.titulo = 'NUEVO'
+      }
+    })
   }
 
   crear() : void {
@@ -38,5 +54,18 @@ export class FormularioUsuarioComponent implements OnInit {
         })*/        
         this.error = e.error
       })
+  }
+
+  update() : void {
+    console.log(this.usuario);
+    this.usuariosService.update(this.usuario).subscribe(
+      json => {
+        this.router.navigate(['/usuarios']);
+        swal.fire('Usuarios',`Se actualizo el registro exitosamente!!!`,'success');
+      },
+      err => {
+        this.error = err.error;
+      }
+    );
   }
 }

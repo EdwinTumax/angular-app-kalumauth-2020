@@ -32,12 +32,17 @@ export class UsuariosComponent implements OnInit {
       cancelButtonText: 'No',    reverseButtons: true
     }).then((resultado) =>{
       if (resultado.isConfirmed) {
-        this.usuariosService.delete(usuario.id).subscribe((data: any) =>{
+        this.usuariosService.delete(usuario.id).subscribe(() => {
+          this.usuarios = this.usuarios.filter(elemento => elemento !== usuario);
           swal.fire('Eliminar usuario',
             'Registro eliminado!!!','success');
         });
       }
     });
   } 
+
+  editar(usuario: Usuario) : void {
+    console.log(usuario);
+  }
 
 }

@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+// Interceptores
+import { TokenInterceptor } from './components/interceptors/token.interceptor';
+import { AuthInterceptor } from './components/interceptors/auth.interceptor';
 // Rutas
 import { APPROUTING } from './app.routes';
 // Componentes
@@ -33,7 +36,10 @@ import { LoginComponent } from './components/login/login.component';
     HttpClientModule,
     APPROUTING
   ],
-  providers: [UsuariosService],
+  providers: [UsuariosService, 
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
