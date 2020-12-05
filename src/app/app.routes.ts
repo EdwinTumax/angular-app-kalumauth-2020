@@ -8,6 +8,7 @@ import { AuthGuard } from './components/usuarios/guards/auth.guard';
 
 const APP_ROUTES: Routes = [
     {path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
+    {path: 'usuarios/page/:page', component: UsuariosComponent, canActivate: [AuthGuard] },
     {path: 'usuarios/form', component: FormularioUsuarioComponent, canActivate: [AuthGuard]},
     {path: 'usuarios/form/:id', component: FormularioUsuarioComponent, canActivate: [AuthGuard]},
     {path: 'roles', component: RolesComponent, canActivate: [AuthGuard]},

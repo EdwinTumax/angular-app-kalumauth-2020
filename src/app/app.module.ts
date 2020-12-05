@@ -18,6 +18,7 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { UsuariosService } from './services/usuarios.service';
 import { FormularioUsuarioComponent } from './components/usuarios/formulario-usuario.component';
 import { LoginComponent } from './components/login/login.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { LoginComponent } from './components/login/login.component';
     FooterComponent,
     FormularioUsuarioComponent,
     LoginComponent,
+    PaginatorComponent,
   ],
   imports: [
     FormsModule,

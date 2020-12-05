@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario } from './usuario'
 import swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
@@ -12,14 +13,23 @@ import swal from 'sweetalert2';
 export class UsuariosComponent implements OnInit {
   usuario: Usuario;
   usuarios: any[] = [];
+  paginador: any;
 
-  constructor(private usuariosService: UsuariosService) {
-    this.usuariosService.getUsuarios().subscribe((data: any) =>{
-      this.usuarios = data;
-    })
-   }
+  constructor(private usuariosService: UsuariosService, private activatedRoute: ActivatedRoute) {  
+  }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      let page:number = +params.get('page');
+      if(!page){
+        page = 0;
+      }
+      this.usuariosService.getUsuariosPage(page).subscribe(response => {
+        this.usuarios = response.content as Usuario[];
+        this.paginador = response;
+      });
+    });
+    
   }
 
   eliminar(usuario: Usuario) : void {

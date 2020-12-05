@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usuario } from '../components/usuarios/usuario';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { map,catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -17,6 +17,10 @@ export class UsuariosService {
 
   getUsuarios(): Observable<Usuario[]> {
     return this.httpClient.get<Usuario[]>( `${this.endPoint}/Usuarios`)
+  }
+
+  getUsuariosPage(page: number) : Observable<any> {
+    return this.httpClient.get<any[]>(`${this.endPoint}/Usuarios/page/${page}`)      
   }
   
   create(usuario: Usuario) : Observable<Usuario>{
